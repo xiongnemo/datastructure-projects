@@ -12,13 +12,17 @@ int main()
     char infix_data[BUFFER_SIZE];
     char rpn_data[BUFFER_SIZE];
     int infix_length = 0;
-    int* infix_length_pointer = &infix_length;
+    int *infix_length_pointer = &infix_length;
     cin.getline(raw_data, BUFFER_SIZE);
-    rpn_processor.pre_processer(raw_data, infix_data, infix_length_pointer);
-    cout << "The preprocessor result is: " << infix_data << endl;
-    rpn_processor.infix2rpn(infix_data, rpn_data);
-    cout << "The rpn result is: " << rpn_data << endl;
-    cout << "The result is: " << rpn_processor.eval_rpn(rpn_data) << endl;
+    if (rpn_processor.pre_processer(raw_data, infix_data, infix_length_pointer))
+    {
+        cout << "The preprocessor result is: " << infix_data << endl;
+        if(rpn_processor.infix2rpn(infix_data, rpn_data))
+        {
+            cout << "The rpn result is: " << rpn_data << endl;
+            cout << "The result is: " << rpn_processor.eval_rpn(rpn_data) << endl;
+        }
+    }
 }
 
 void stack_test()
@@ -51,7 +55,7 @@ void rpn_preprocesser_test()
     char raw_data[BUFFER_SIZE];
     char infix_data[BUFFER_SIZE];
     int infix_length = 0;
-    int* infix_length_pointer = &infix_length;
+    int *infix_length_pointer = &infix_length;
 
     cin.getline(raw_data, BUFFER_SIZE);
     rpn_processor.pre_processer(raw_data, infix_data, infix_length_pointer);
@@ -79,5 +83,3 @@ void rpn_eval_test()
     cin.getline(rpn_data, BUFFER_SIZE, '\n');
     cout << "The result is: " << rpn_processor.eval_rpn(rpn_data) << endl;
 }
-
-

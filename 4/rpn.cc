@@ -2,21 +2,24 @@
 #include "calc.h"
 #include "helper.h"
 
-using std::cerr;
-using test::OperatorType;
 using helper::calc_decimal_digits;
+using std::cerr;
 
-int Rpn::pre_processer(char *infix_orig, char *result, int *result_length)
+bool Rpn::pre_processer(char *infix_orig, char *result, int *result_length)
 {
     int length = strlen(infix_orig);
     int temp_result_length = 0;
     char temp_char;
     char mid_result[BUFFER_SIZE];
+
+    // Judge whether the original expression is ended in '='
     if (infix_orig[length - 1] != '=')
     {
         cerr << "Missing '=' in original infix expression." << endl;
-        return -4;
+        return false;
     }
+
+    // remove extra whitespaces in the expression
     for (int i = 0; i < length; i++)
     {
         temp_char = infix_orig[i];
@@ -29,6 +32,8 @@ int Rpn::pre_processer(char *infix_orig, char *result, int *result_length)
         }
     }
 
+    // convert unary operator '+' and '-' into binary forms
+    // do some syntax checking
     length = temp_result_length;
     temp_result_length = 0;
     for (int i = 0; i < length; i++)
@@ -37,19 +42,10 @@ int Rpn::pre_processer(char *infix_orig, char *result, int *result_length)
         switch (temp_char)
         {
         case '+':
-            for (int j = 0; j <= N_ACTURAL_OPERATOR; j++)
+            if (check_legal_operator(&mid_result[i], 3, 0))
             {
-                if (mid_result[i + 1] == vaild_operators[j])
-                {
-                    for (int k = 0; k <= N_ACTURAL_OPERATOR; k++)
-                    {
-                        if (mid_result[i + 2] == vaild_operators[k])
-                        {
-                            cerr << "Three trailing operators appeared!" << endl;
-                            return -5;
-                        }
-                    }
-                }
+                cerr << "Three trailing operators appeared in original infix expression." << endl;
+                return false;
             }
             if ((i == 0) || (i > 0 && mid_result[i - 1] == '('))
             {
@@ -59,22 +55,14 @@ int Rpn::pre_processer(char *infix_orig, char *result, int *result_length)
             temp_result_length++;
             break;
         case '-':
-            for (int j = 0; j <= N_ACTURAL_OPERATOR; j++)
+            if (check_legal_operator(&mid_result[i], 3, 0))
             {
-                if (mid_result[i + 1] == vaild_operators[j])
-                {
-                    for (int k = 0; k <= N_ACTURAL_OPERATOR; k++)
-                    {
-                        if (mid_result[i + 2] == vaild_operators[k])
-                        {
-                            cerr << "Three trailing operators appeared!" << endl;
-                            return -5;
-                        }
-                    }
-                }
+                cerr << "Three trailing operators appeared in original infix expression." << endl;
+                return false;
             }
-            if ((i == 0) || (i > 0 && ((mid_result[i - 1] == '(') || (mid_result[i - 1] == '+') || (mid_result[i - 1] == '-') || (mid_result[i - 1] == '*') || (mid_result[i - 1] == '/') || (mid_result[i - 1] == '%') || (mid_result[i - 1] == '^'))))
+            if ((i == 0) || (i > 0 && check_legal_operator(&mid_result[i - 1], 1, 1)))
             {
+                // convert unary operator '-' into binary operator '-'
                 double temp = atof(&mid_result[i + 1]);
                 sprintf(&result[temp_result_length], "(0-%lf)", temp);
                 temp_result_length += (4 + calc_decimal_digits(&result[temp_result_length + 4]) + 1);
@@ -90,24 +78,20 @@ int Rpn::pre_processer(char *infix_orig, char *result, int *result_length)
         case '/':
         case '%':
         case '^':
-        for (int j = 0; j <= N_ACTURAL_OPERATOR; j++)
+            if (check_legal_operator(&mid_result[i], 2, 0))
             {
-                if (mid_result[i + 1] == vaild_operators[j])
-                {
-                    cerr << "Two trailing operators appeared!" << endl;
-                    return -6;
-                }
+                cerr << "Two trailing operators appeared in original infix expression." << endl;
+                return false;
             }
             result[temp_result_length] = temp_char;
             temp_result_length++;
             break;
+        // other operators and operands
+        // just passing
         case '=':
         case '.':
         case '(':
         case ')':
-            result[temp_result_length] = temp_char;
-            temp_result_length++;
-            break;
         case '0':
         case '1':
         case '2':
@@ -122,13 +106,13 @@ int Rpn::pre_processer(char *infix_orig, char *result, int *result_length)
             temp_result_length++;
             break;
         default:
-            cerr << "Unsupported character appeared in infix!" << endl;
-            return -3;
+            cerr << "Unsupported or illegal character(s) appeared in original infix expression." << endl;
+            return false;
         }
     }
     result[temp_result_length] = '\0';
     *result_length = temp_result_length;
-    return 0;
+    return true;
 }
 
 bool Rpn::infix2rpn(char *infix, char *result)
@@ -137,7 +121,6 @@ bool Rpn::infix2rpn(char *infix, char *result)
     int temp_result_length = 0;
     double temp = 0;
     operator_stack.make_empty();
-    //operand_stack_temp.make_empty();
     for (int i = 0; i < infix_length; i++)
     {
         char temp_char = infix[i];
@@ -151,6 +134,8 @@ bool Rpn::infix2rpn(char *infix, char *result)
         case '^':
             if (!operator_stack.empty())
             {
+                // if current operator's priority is bigger or equal than the one on stack top
+                // pop until it's less than current
                 while (order_between_operator(temp_char, operator_stack.top()) >= 0)
                 {
                     result[temp_result_length] = operator_stack.pop();
@@ -162,6 +147,7 @@ bool Rpn::infix2rpn(char *infix, char *result)
                     }
                 }
             }
+            // push current operator onto stack
             operator_stack.push(temp_char);
             break;
         case '=':
@@ -170,13 +156,14 @@ bool Rpn::infix2rpn(char *infix, char *result)
             operator_stack.push(temp_char);
             break;
         case ')':
+            // pop operators until '(' appears on the top
             while (operator_stack.top() != '(')
             {
                 result[temp_result_length] = operator_stack.pop();
                 result[temp_result_length + 1] = ' ';
                 temp_result_length += 2;
             }
-            operator_stack.pop(); // pop '('
+            operator_stack.pop(); // make sure to pop '('
             break;
         case '0':
         case '1':
@@ -188,23 +175,24 @@ bool Rpn::infix2rpn(char *infix, char *result)
         case '7':
         case '8':
         case '9':
+            // append operand to the back
             temp = atof(&infix[i]);
             sprintf(&result[temp_result_length], "%lf ", temp);
             temp_result_length += (1 + calc_decimal_digits(&result[temp_result_length]));
             i += calc_decimal_digits(&infix[i]) - 1;
             break;
         default:
-            cerr << "Unsupported character appeared in infix!" << endl;
-            return -3;
+            cerr << "Unsupported or illegal character(s) appeared in processed infix expression." << endl;
+            return false;
         }
     }
+    // pop remaining operators
     while (!operator_stack.empty())
     {
         result[temp_result_length] = operator_stack.pop();
         result[temp_result_length + 1] = ' ';
         temp_result_length += 2;
     }
-
     result[temp_result_length] = '\0';
     return true;
 }
@@ -212,18 +200,10 @@ bool Rpn::infix2rpn(char *infix, char *result)
 double Rpn::eval_rpn(char *rpn)
 {
     int rpn_length = strlen(rpn);
-    operator_stack.make_empty();
     operand_stack.make_empty();
     for (int i = 0; i < rpn_length;)
     {
         char temp_char = rpn[i];
-        /*
-        if (i == 0 || i == 1)
-        {
-            operand_stack.push(temp_char - 48);
-            continue;
-        }
-        */
         switch (temp_char)
         {
         case '=':
@@ -236,20 +216,47 @@ double Rpn::eval_rpn(char *rpn)
         case '/':
         case '%':
         case '^':
+            // when it meets operator character, we pop two elements from the stack, cacluate the result, push back onto stack
             operand_stack.push(eval.binary_operator(operand_stack.pop(), operand_stack.pop(), temp_char));
             i = i + 2;
-            //operand_stack.print();
             break;
         default:
+            // push operand onto stack
             operand_stack.push(atof(&rpn[i]));
             i += calc_decimal_digits(&rpn[i]) + 1;
-            //operand_stack.print();
         }
+    }
+    // after all evaluation process complete, there should be only one element in the stack, which is the result
+    if (operand_stack.size() != 1)
+    {
+        cerr << "Syntax error(s) occured in evaluating rpn." << endl;
+        return -7;
     }
     return operand_stack.top();
 }
 
 int Rpn::order_between_operator(char operator_one, char operator_two)
 {
+    // priority order between operators
     return (priority[static_cast<int>(operator_two)] - priority[static_cast<int>(operator_one)]);
+}
+
+// mode 0 don't include '('
+// mode 1 include '('
+bool Rpn::check_legal_operator(char *target, int num, int mode)
+{
+    int count = 0;
+    int num_operators = (N_ACTURAL_OPERATOR + mode);
+    for (int i = 0; i < num; i++)
+    {
+        for (int j = 0; j < num_operators; j++)
+        {
+            if (target[i] == vaild_operators[j])
+            {
+                count++;
+                break;
+            }
+        }
+    }
+    return (!(num - count));
 }
