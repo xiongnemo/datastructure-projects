@@ -77,7 +77,7 @@ int Rpn::pre_processer(char *infix_orig, char *result, int *result_length)
             {
                 double temp = atof(&mid_result[i + 1]);
                 sprintf(&result[temp_result_length], "(0-%lf)", temp);
-                temp_result_length += (4 + calc_decimal_digits(&result[temp_result_length]));
+                temp_result_length += (4 + calc_decimal_digits(&result[temp_result_length + 4]) + 1);
                 i += calc_decimal_digits(&mid_result[i + 1]);
             }
             else
