@@ -1,10 +1,46 @@
-#include "1.h"
+#include "management_system.h"
 
 int main(void)
 {
-    int a = 0;
-    int b = 0;
-    
-    printf("hello, world");
+    Managementsystem register_system;
+    Node *current = register_system.initalize_system();
+    register_system.show_current_table(current);
+    char option = 0;
+    while (option != '0')
+    {
+        cout << "Please choose the operation you want to do." << endl;
+        cout << "Press: " << endl;
+        cout << "1 or I for [I]nsert item, 2 or D for [D]elete item, 3 or F for [F]ind in table, " << endl;
+        cout << "4 or E for [E]dit item, 5 or S to [S]how current table, 0 to quit system." << endl;
+        option = getch();
+        switch (option)
+        {
+        case '1':
+        case 'i':
+            current = register_system.insert_examinee(current);
+            continue;
+        case '2':
+        case 'd':
+            current = register_system.delete_examinee(current);
+            continue;
+        case '3':
+        case 'f':
+            register_system.find_examinee(current);
+            continue;
+        case '4':
+        case 'e':
+            register_system.edit_examinee(current);
+            continue;
+        case '5':
+        case 's':
+            register_system.show_current_table(current);
+            continue;
+        case '0':
+            register_system.quit(current);
+            break;
+        default:
+            cerr << "Unrecognized option." << endl;
+            continue;
+        }
+    }
 }
-
