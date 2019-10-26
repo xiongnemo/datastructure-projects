@@ -57,11 +57,12 @@ void Linkedlist::show_list(Node *head)
             break;
         }
         cout
-            << (current->id) << "   "
-            << (current->name) << "   "
-            << temp_gender << "   "
-            << (current->age) << "   "
-            << (current->test_type)
+            << setiosflags(ios::left)
+            << setw(15) << (current->id) 
+            << setw(20) << (current->name) 
+            << setw(8)<< temp_gender
+            << setw(6) << (current->age)
+            << setw(30) << (current->test_type)
             << endl;
         next = current->next;
         current = next;
@@ -85,11 +86,12 @@ void Linkedlist::show_item(Node *current)
         break;
     }
     cout
-        << (current->id) << "   "
-        << (current->name) << "   "
-        << temp_gender << "   "
-        << (current->age) << "   "
-        << (current->test_type)
+        << setiosflags(ios::left)
+        << setw(15) << (current->id)
+        << setw(20) << (current->name)
+        << setw(8)<< temp_gender
+        << setw(6) << (current->age)
+        << setw(30) << (current->test_type)
         << endl;
 }
 

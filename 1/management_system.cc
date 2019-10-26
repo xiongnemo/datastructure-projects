@@ -6,6 +6,7 @@ Node *Managementsystem::initalize_system()
     cout << "Please set up the system first." << endl;
     cout << "Please input the No. of the examinees: ";
     cin >> examinee_quantity;
+    total_num += examinee_quantity;
     cout << "Please enter the id, name, gender, age and test type of each examinee, one by one." << endl;
     Node *head = list.create_linked_list();
     Node *current = head;
@@ -19,15 +20,12 @@ Node *Managementsystem::initalize_system()
 void Managementsystem::show_current_table(Node *head)
 {
     cout
-        << "Examinee ID "
-        << "  "
-        << "Name"
-        << "      "
-        << "Gender"
-        << "    "
-        << "Age"
-        << "    "
-        << "Test type"
+        << setiosflags(ios::left)
+        << setw(15) << "Examinee ID"
+        << setw(20) << "Name"
+        << setw(8) << "Gender"
+        << setw(6) << "Age"
+        << setw(30) << "Test type"
         << endl;
     list.show_list(head->next);
 }
@@ -55,21 +53,70 @@ void Managementsystem::find_examinee(Node *head)
 void Managementsystem::show_current_item(Node *current)
 {
     cout
-        << "Examinee ID "
-        << "  "
-        << "Name"
-        << "      "
-        << "Gender"
-        << "    "
-        << "Age"
-        << "    "
-        << "Test type"
+        << setiosflags(ios::left)
+        << setw(15) << "Examinee ID"
+        << setw(20) << "Name"
+        << setw(8) << "Gender"
+        << setw(6) << "Age"
+        << setw(30) << "Test type"
         << endl;
     list.show_item(current);
 }
 
 Node *Managementsystem::insert_examinee(Node *head)
 {
+    int pos_target = 0;
+    Node *current = head;
+    cout << "\nPlease input the INDEX of the NEW student you want to add to." << endl;
+    cin >> pos_target;
+    if (pos_target < 1 || pos_target > total_num + 1)
+    {
+        cerr << "Invaild pos to insert!" << endl;
+        return head;
+    }
+    else if (pos_target == 1)
+    {
+        Node *fake_head = (Node *)malloc(sizeof(Node));
+        cout << "Please enter the id, name, gender, age and test type of each examinee, one by one." << endl;
+        Node *fake_current = list.add_member(fake_head);
+        fake_current->next = head->next;
+        free(head);
+        total_num++;
+        return fake_head;
+    }
+    else if (pos_target == total_num + 1)
+    {
+        Node *current = head;
+        Node *last = current;
+        while (current)
+        {
+            last = current;
+            current = current->next;
+        }
+        cout << "Please enter the id, name, gender, age and test type of each examinee, one by one." << endl;
+        list.add_member(last);
+        total_num++;
+        return head;
+    }
+    Node *last = current;
+    int current_index = 0;
+    while (current)
+    {
+        if (current_index == pos_target)
+        {
+            break;
+        }
+        current_index++;
+        last = current;
+        current = current->next;
+    }
+    Node *fake_head = (Node *)malloc(sizeof(Node));
+    cout << "Please enter the id, name, gender, age and test type of each examinee, one by one." << endl;
+    Node *fake_current = list.add_member(fake_head);
+    last->next = fake_current;
+    fake_current->next = current;
+    free(fake_head);
+    total_num++;
     return head;
 }
 
@@ -153,8 +200,47 @@ void Managementsystem::edit_current_item(Node *current)
 
 Node *Managementsystem::delete_examinee(Node *head)
 {
-    int index;
-    
+    int id_target;
+    Node *current = head;
+    Node *last = head;
+    cout << "Input the Examinee ID of the student you want to delete." << endl;
+    cin >> id_target;
+    while (current)
+    {
+        if (current->id == id_target)
+        {
+            if (current == head)
+            {
+                current = current->next;
+                cout << "You will delete: ";
+                show_current_item(current);
+                free(head);
+                total_num--;
+                show_current_table(current);
+                return current;
+            }
+            else if (current->next == NULL)
+            {
+                last->next = NULL;
+                cout << "You will delete: ";
+                show_current_item(current);
+                free(current);
+                total_num--;
+                show_current_table(head);
+                return head;
+            }
+            last->next = current->next;
+            cout << "You will delete: ";
+            show_current_item(current);
+            free(current);
+            total_num--;
+            show_current_table(head);
+            return head;
+        }
+        last = current;
+        current = current->next;
+    }
+    cout << "Not found!" << endl;
     return head;
 }
 

@@ -43,4 +43,13 @@ int main(void)
             continue;
         }
     }
+    return 0;
 }
+/*
+1 aaa male 20 qqq
+2 bbb female 30 www
+3 ccc male 40 eee
+
+999 eee male 99 uuu
+998 fff female 88 ttt
+*/

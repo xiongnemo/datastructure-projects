@@ -7,6 +7,10 @@
 class Managementsystem
 {
 public:
+    Managementsystem()
+    {
+        total_num = 0;
+    }
     Linkedlist list;
     Node *initalize_system();
     void show_current_table(Node *head);
@@ -18,6 +22,7 @@ public:
 private:
     void show_current_item(Node *current);
     void edit_current_item(Node *current);
+    int total_num;
 };
 
 #endif

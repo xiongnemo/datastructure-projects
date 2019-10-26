@@ -6,6 +6,7 @@
 #include <string>
 #include <cstring>
 #include <iostream>
+#include <iomanip>
 
 #define NAME_BUFFER_SIZE 20
 #define GENDER_BUFFER_SIZE 10
@@ -16,6 +17,9 @@ using std::cout;
 using std::cerr;
 using std::endl;
 using std::string;
+using std::setw;
+using std::setiosflags;
+using std::ios;
 
 class Node
 {
