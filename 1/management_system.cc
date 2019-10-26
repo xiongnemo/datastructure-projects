@@ -19,16 +19,10 @@ Node *Managementsystem::initalize_system()
 
 void Managementsystem::show_current_table(Node *head)
 {
-    cout
-        << setiosflags(ios::left)
-        << setw(15) << "Examinee ID"
-        << setw(20) << "Name"
-        << setw(8) << "Gender"
-        << setw(6) << "Age"
-        << setw(30) << "Test type"
-        << endl;
+    print_table_head();
     list.show_list(head->next);
 }
+
 void Managementsystem::find_examinee(Node *head)
 {
     Node *current = find_examinee_by_id(head);
@@ -43,14 +37,7 @@ void Managementsystem::find_examinee(Node *head)
 
 void Managementsystem::show_current_item(Node *current)
 {
-    cout
-        << setiosflags(ios::left)
-        << setw(15) << "Examinee ID"
-        << setw(20) << "Name"
-        << setw(8) << "Gender"
-        << setw(6) << "Age"
-        << setw(30) << "Test type"
-        << endl;
+    print_table_head();
     list.show_item(current);
 }
 
@@ -242,4 +229,16 @@ void Managementsystem::delete_current_item(Node *current, Node *head)
     total_num--;
     cout << "\nCurrent table: " << endl;
     show_current_table(head);
+}
+
+void Managementsystem::print_table_head()
+{
+    cout
+        << setiosflags(ios::left)
+        << setw(ID_BUFFER_WIDTH) << "Examinee ID"
+        << setw(NAME_BUFFER_SIZE) << "Name"
+        << setw(GENDER_BUFFER_SIZE) << "Gender"
+        << setw(AGE_BUFFER_WIDTH) << "Age"
+        << setw(TEST_TYPE_BUFFER_SIZE) << "Test type"
+        << endl;
 }

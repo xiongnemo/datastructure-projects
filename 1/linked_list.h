@@ -8,8 +8,10 @@
 #include <iostream>
 #include <iomanip>
 
+#define ID_BUFFER_WIDTH 15
 #define NAME_BUFFER_SIZE 20
 #define GENDER_BUFFER_SIZE 10
+#define AGE_BUFFER_WIDTH 6
 #define TEST_TYPE_BUFFER_SIZE 30
 
 using std::cin;

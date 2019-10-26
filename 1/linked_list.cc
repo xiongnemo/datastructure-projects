@@ -40,27 +40,7 @@ void Linkedlist::show_list(Node *head)
     Node *next = NULL;
     while (current)
     {
-        string temp_gender;
-        switch (current->gender)
-        {
-        case 1:
-            temp_gender = "male  ";
-            break;
-        case 2:
-            temp_gender = "female";
-            break;
-        default:
-            cerr << "Error or unsupported gender in the list!" << endl;
-            break;
-        }
-        cout
-            << setiosflags(ios::left)
-            << setw(15) << (current->id) 
-            << setw(20) << (current->name) 
-            << setw(8)<< temp_gender
-            << setw(6) << (current->age)
-            << setw(30) << (current->test_type)
-            << endl;
+        show_item(current);
         next = current->next;
         current = next;
     }
@@ -84,11 +64,11 @@ void Linkedlist::show_item(Node *current)
     }
     cout
         << setiosflags(ios::left)
-        << setw(15) << (current->id)
-        << setw(20) << (current->name)
-        << setw(8)<< temp_gender
-        << setw(6) << (current->age)
-        << setw(30) << (current->test_type)
+        << setw(ID_BUFFER_WIDTH) << (current->id)
+        << setw(NAME_BUFFER_SIZE) << (current->name)
+        << setw(GENDER_BUFFER_SIZE)<< temp_gender
+        << setw(AGE_BUFFER_WIDTH) << (current->age)
+        << setw(TEST_TYPE_BUFFER_SIZE) << (current->test_type)
         << endl;
 }
 
