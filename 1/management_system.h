@@ -22,6 +22,8 @@ public:
 private:
     void show_current_item(Node *current);
     void edit_current_item(Node *current);
+    void delete_current_item(Node *current, Node *head);
+    Node* find_examinee_by_id(Node *head);
     int total_num;
 };
 

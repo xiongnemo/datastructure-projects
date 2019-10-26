@@ -12,6 +12,7 @@ int main(void)
         cout << "Press: " << endl;
         cout << "1 or I for [I]nsert item, 2 or D for [D]elete item, 3 or F for [F]ind in table, " << endl;
         cout << "4 or E for [E]dit item, 5 or S to [S]how current table, 0 to quit system." << endl;
+        cout << endl;
         option = getch();
         switch (option)
         {

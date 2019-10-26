@@ -10,11 +10,7 @@ Node *Linkedlist::add_member(Node *current_list_end)
 {
     Node *current = (Node *)malloc(sizeof(Node));
     current_list_end->next = current;
-    int id = 0;
-    char name[NAME_BUFFER_SIZE];
     string temp_gender;
-    int age = 0;
-    char test_type[TEST_TYPE_BUFFER_SIZE];
     cin >> (current->id);
     cin >> (current->name);
     cin >> temp_gender;
@@ -33,6 +29,7 @@ Node *Linkedlist::add_member(Node *current_list_end)
     cin >> (current->age);
     cin >> (current->test_type);
     current->next = NULL;
+    current->prev = current_list_end;
     return current;
 }
 

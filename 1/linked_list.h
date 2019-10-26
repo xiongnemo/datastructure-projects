@@ -24,6 +24,7 @@ using std::ios;
 class Node
 {
 public:
+    Node* prev;
     int id = 0;
     char name[NAME_BUFFER_SIZE];
     int gender = 0;
