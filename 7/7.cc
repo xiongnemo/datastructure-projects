@@ -22,4 +22,6 @@ int main()
         heap.insert(node, b);
     }
     cout << sum << endl;
+    free(node->data);
+    free(node);
 }
