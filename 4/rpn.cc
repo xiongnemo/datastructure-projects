@@ -10,6 +10,7 @@ bool Rpn::pre_processer(char *infix_orig, char *result, int *result_length)
     int length = strlen(infix_orig);
     int temp_result_length = 0;
     char temp_char;
+    int open_parentheses_count = 0;
     char mid_result[BUFFER_SIZE];
 
     // Judge whether the original expression is ended in '='
@@ -86,12 +87,17 @@ bool Rpn::pre_processer(char *infix_orig, char *result, int *result_length)
             result[temp_result_length] = temp_char;
             temp_result_length++;
             break;
+        // semicolons should match
+        case '(':
+            open_parentheses_count++;
+            break;
+        case ')':
+            open_parentheses_count--;
+            break;
         // other operators and operands
         // just passing
         case '=':
         case '.':
-        case '(':
-        case ')':
         case '0':
         case '1':
         case '2':
@@ -109,6 +115,18 @@ bool Rpn::pre_processer(char *infix_orig, char *result, int *result_length)
             cerr << "Unsupported or illegal character(s) appeared in original infix expression." << endl;
             return false;
         }
+    }
+    if (open_parentheses_count)
+    {
+        if (open_parentheses_count > 0)
+        {
+            cerr << "Open parentheses found!" << endl;
+        }
+        else
+        {
+            cerr << "Extra parentheses found!" << endl;
+        }
+        return false;
     }
     result[temp_result_length] = '\0';
     *result_length = temp_result_length;
