@@ -53,24 +53,39 @@ void Familymanagementsystem::create_family(Familynode *head)
         }
         else
         {
-            cout << "Please inpt the quality of " << current->name << "'s descendant." << endl;
+            cout << "Please input the quality of " << current->name << "'s descendant." << endl;
             cout << "Input number: ";
             cin >> temp_member_quality;
             while (temp_member_quality > MOST_DESCEN_QUALITY)
             {
                 cerr << "MOST_DESCEN_QUALITY " << MOST_DESCEN_QUALITY << " reached." << endl;
                 cout << "Current target's descendant quality excceeded. Try again." << endl;
-                cout << "Please inpt the quality of " << current->name << "'s descendant." << endl;
+                cout << "Please input the quality of " << current->name << "'s descendant." << endl;
                 cout << "Input number: ";
                 cin >> temp_member_quality;
             }
-            cout << "Please input each descendant's name, one by one: ";
+            cout << "Please input each descendant's name, one by one." << endl;
+            cout << "Press [Enter] each time you finish your input." << endl;
             for (int i = 0; i < temp_member_quality; i++)
             {
                 Familynode *temp = create_new_node();
+                char name_buffer[NAME_BUFFER_SIZE];
                 temp->prev = current;
                 current->next[current->descendant_quality] = temp;
-                cin >> temp->name;
+                cout << "Now enter the name of descendant #" << i + 1 << ": ";
+                cin >> name_buffer;
+                while (find_node_by_name(head, name_buffer))
+                {
+                    cerr << "Duplicated records found for entry " << name_buffer << "." << endl;
+                    cout << "Given name exists in record. Try input another name." << endl;
+                    cout << "Now enter the name of descendant #" << i + 1 << ": ";
+                    cin >> name_buffer;
+                }
+                int temp_length = strlen(name_buffer);
+                for (int j = 0; j <= temp_length; j++)
+                {
+                    temp->name[j] = name_buffer[j];
+                }
                 (current->descendant_quality) += 1;
             }
             print_next_generation_member(current);
@@ -92,9 +107,23 @@ void Familymanagementsystem::add_family_member(Familynode *head)
         }
         cout << "Please input his/her new descendant's name: ";
         Familynode *temp = create_new_node();
+        char name_buffer[NAME_BUFFER_SIZE];
         temp->prev = current;
         current->next[current->descendant_quality] = temp;
-        cin >> temp->name;
+        cout << "Now enter the new descendant's name:";
+        cin >> name_buffer;
+        while (find_node_by_name(head, name_buffer))
+        {
+            cerr << "Duplicated records found for entry " << name_buffer << "." << endl;
+            cout << "Given name exists in record. Try input another name." << endl;
+            cout << "Now enter the new descendant's name:";
+            cin >> name_buffer;
+        }
+        int temp_length = strlen(name_buffer);
+        for (int j = 0; j <= temp_length; j++)
+        {
+            temp->name[j] = name_buffer[j];
+        }
         (current->descendant_quality) += 1;
         print_next_generation_member(current);
     }

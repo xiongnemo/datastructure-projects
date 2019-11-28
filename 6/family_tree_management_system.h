@@ -3,7 +3,6 @@
 
 #include <cstdio>
 #include <cmath>
-#include <string>
 #include <cstring>
 #include <iostream>
 #include <iomanip>
@@ -21,7 +20,6 @@ using std::endl;
 using std::ios;
 using std::setiosflags;
 using std::setw;
-using std::string;
 
 class Familynode
 {
