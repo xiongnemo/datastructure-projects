@@ -1,9 +1,9 @@
 #include "heap.h"
 
-Heapnode *Heap::create_heap(int quality) // Create Minimum Heap
+Heapnode *Heap::create_heap(int quantity) // Create Minimum Heap
 {
     Heapnode *new_node = (Heapnode *)malloc(sizeof(Heapnode));
-    new_node->data = (int *)malloc((quality + 1) * sizeof(int));
+    new_node->data = (int *)malloc((quantity + 1) * sizeof(int));
     new_node->size = 0;
     new_node->data[0] = -1; // Impossible value, serves as guard
     return new_node;

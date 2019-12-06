@@ -3,11 +3,11 @@
 int main()
 {
     Heap heap;
-    int quality;
+    int quantity;
     int sum = 0;
-    cin >> quality;
-    Heapnode *node = heap.create_heap(quality);
-    for (int i = 1; i <= quality; i++)
+    cin >> quantity;
+    Heapnode *node = heap.create_heap(quantity);
+    for (int i = 1; i <= quantity; i++)
     {
         int temp_int;
         cin >> temp_int;

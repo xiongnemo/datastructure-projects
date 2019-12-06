@@ -9,7 +9,7 @@
 #include <conio.h>
 
 #define NAME_BUFFER_SIZE 20
-#define MOST_DESCEN_QUALITY 10
+#define MOST_DESCEN_quantity 10
 #define NO_OUTPUT 0
 #define FULL_OUTPUT 1
 
@@ -26,8 +26,8 @@ class Familynode
 public:
     Familynode *prev;
     char name[NAME_BUFFER_SIZE];
-    int descendant_quality;
-    Familynode *next[MOST_DESCEN_QUALITY];
+    int descendant_quantity;
+    Familynode *next[MOST_DESCEN_quantity];
 };
 
 class Familymanagementsystem

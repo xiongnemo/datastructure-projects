@@ -41,37 +41,37 @@ Familynode *Familymanagementsystem::initalize_system()
 
 void Familymanagementsystem::create_family(Familynode *head)
 {
-    int temp_member_quality;
+    int temp_member_quantity;
     cout << "Please input the name of the target you want to create his/hers family." << endl;
     Familynode *current = find_person_by_name(head);
     if (current)
     {
-        if (current->descendant_quality > 0)
+        if (current->descendant_quantity > 0)
         {
-            cerr << "Current target's descendant quality is not zero." << endl;
+            cerr << "Current target's descendant quantity is not zero." << endl;
             return;
         }
         else
         {
-            cout << "Please input the quality of " << current->name << "'s descendant." << endl;
+            cout << "Please input the quantity of " << current->name << "'s descendant." << endl;
             cout << "Input number: ";
-            cin >> temp_member_quality;
-            while (temp_member_quality > MOST_DESCEN_QUALITY)
+            cin >> temp_member_quantity;
+            while (temp_member_quantity > MOST_DESCEN_quantity)
             {
-                cerr << "MOST_DESCEN_QUALITY " << MOST_DESCEN_QUALITY << " reached." << endl;
-                cout << "Current target's descendant quality excceeded. Try again." << endl;
-                cout << "Please input the quality of " << current->name << "'s descendant." << endl;
+                cerr << "MOST_DESCEN_quantity " << MOST_DESCEN_quantity << " reached." << endl;
+                cout << "Current target's descendant quantity excceeded. Try again." << endl;
+                cout << "Please input the quantity of " << current->name << "'s descendant." << endl;
                 cout << "Input number: ";
-                cin >> temp_member_quality;
+                cin >> temp_member_quantity;
             }
             cout << "Please input each descendant's name, one by one." << endl;
             cout << "Press [Enter] each time you finish your input." << endl;
-            for (int i = 0; i < temp_member_quality; i++)
+            for (int i = 0; i < temp_member_quantity; i++)
             {
                 Familynode *temp = create_new_node();
                 char name_buffer[NAME_BUFFER_SIZE];
                 temp->prev = current;
-                current->next[current->descendant_quality] = temp;
+                current->next[current->descendant_quantity] = temp;
                 cout << "Now enter the name of descendant #" << i + 1 << ": ";
                 cin >> name_buffer;
                 while (find_node_by_name(head, name_buffer))
@@ -86,7 +86,7 @@ void Familymanagementsystem::create_family(Familynode *head)
                 {
                     temp->name[j] = name_buffer[j];
                 }
-                (current->descendant_quality) += 1;
+                (current->descendant_quantity) += 1;
             }
             print_next_generation_member(current);
         }
@@ -99,17 +99,17 @@ void Familymanagementsystem::add_family_member(Familynode *head)
     Familynode *current = find_person_by_name(head);
     if (current)
     {
-        if (current->descendant_quality == MOST_DESCEN_QUALITY)
+        if (current->descendant_quantity == MOST_DESCEN_quantity)
         {
-            cerr << "MOST_DESCEN_QUALITY " << MOST_DESCEN_QUALITY << " reached." << endl;
-            cout << "Current target's descendant quality excceeded. Try again." << endl;
+            cerr << "MOST_DESCEN_quantity " << MOST_DESCEN_quantity << " reached." << endl;
+            cout << "Current target's descendant quantity excceeded. Try again." << endl;
             return;
         }
         cout << "Please input his/her new descendant's name: ";
         Familynode *temp = create_new_node();
         char name_buffer[NAME_BUFFER_SIZE];
         temp->prev = current;
-        current->next[current->descendant_quality] = temp;
+        current->next[current->descendant_quantity] = temp;
         cout << "Now enter the new descendant's name:";
         cin >> name_buffer;
         while (find_node_by_name(head, name_buffer))
@@ -124,7 +124,7 @@ void Familymanagementsystem::add_family_member(Familynode *head)
         {
             temp->name[j] = name_buffer[j];
         }
-        (current->descendant_quality) += 1;
+        (current->descendant_quantity) += 1;
         print_next_generation_member(current);
     }
 }
@@ -144,25 +144,25 @@ void Familymanagementsystem::dismiss_family(Familynode *head)
         Familynode *prev = current->prev;
         cout << "The person, which is or was or will be the head of the family you want to dismiss, is " << current->name << "." << endl;
         dismiss_node(current, FULL_OUTPUT);
-        if (prev->descendant_quality == 1)
+        if (prev->descendant_quantity == 1)
         {
-            prev->descendant_quality = 0;
-            prev->next[prev->descendant_quality] = NULL;
+            prev->descendant_quantity = 0;
+            prev->next[prev->descendant_quantity] = NULL;
             return;
         }
         int temp_index = 0;
-        for (temp_index = 0; temp_index < prev->descendant_quality; temp_index++)
+        for (temp_index = 0; temp_index < prev->descendant_quantity; temp_index++)
         {
             if (prev->next[temp_index] == current)
             {
                 break;
             }
         }
-        for (int i = temp_index; i < prev->descendant_quality; i++)
+        for (int i = temp_index; i < prev->descendant_quantity; i++)
         {
             prev->next[i] = prev->next[i + 1];
         }
-        prev->descendant_quality -= 1;
+        prev->descendant_quantity -= 1;
     }
 }
 
@@ -198,8 +198,8 @@ void Familymanagementsystem::show_next_generation(Familynode *head)
 Familynode *Familymanagementsystem::create_new_node()
 {
     Familynode *current = (Familynode *)malloc(sizeof(Familynode));
-    current->descendant_quality = 0;
-    for (int i = 0; i < MOST_DESCEN_QUALITY; i++)
+    current->descendant_quantity = 0;
+    for (int i = 0; i < MOST_DESCEN_quantity; i++)
     {
         current->next[i] = NULL;
     }
@@ -232,9 +232,9 @@ Familynode *Familymanagementsystem::find_node_by_name(Familynode *current, char 
     {
         return current;
     }
-    else if ((current->descendant_quality) > 0)
+    else if ((current->descendant_quantity) > 0)
     {
-        for (int i = 0; i < current->descendant_quality;)
+        for (int i = 0; i < current->descendant_quantity;)
         {
             Familynode *temp_result = (find_node_by_name(current->next[i], compare));
             if (temp_result != NULL)
@@ -265,13 +265,13 @@ bool Familymanagementsystem::compare_node_by_name(Familynode *current, char *com
 
 void Familymanagementsystem::print_next_generation_member(Familynode *current)
 {
-    if (current->descendant_quality == 0)
+    if (current->descendant_quantity == 0)
     {
         cout << "This member has no descendant(s)." << endl;
         return;
     }
     cout << current->name << "'s next generation is";
-    for (int i = 0; i < current->descendant_quality; i++)
+    for (int i = 0; i < current->descendant_quantity; i++)
     {
         cout << " " << current->next[i]->name;
     }
@@ -280,7 +280,7 @@ void Familymanagementsystem::print_next_generation_member(Familynode *current)
 
 void Familymanagementsystem::dismiss_node(Familynode *current, int mode)
 {
-    if (current->descendant_quality == 0)
+    if (current->descendant_quantity == 0)
     {
         free(current);
         return;
@@ -292,7 +292,7 @@ void Familymanagementsystem::dismiss_node(Familynode *current, int mode)
             print_next_generation_member(current);
             cout << "We will dismiss them." << endl;
         }
-        for (int i = 0; i < current->descendant_quality; i++)
+        for (int i = 0; i < current->descendant_quantity; i++)
         {
             dismiss_node(current->next[i], mode);
         }
