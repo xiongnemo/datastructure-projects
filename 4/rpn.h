@@ -21,13 +21,15 @@ public:
         priority['/'] = 2;
         priority['%'] = 2;
         priority['^'] = 3;
+        result = 0;
     }
     Calc eval;
     StackForDouble operand_stack;
     StackForChar operator_stack;
     bool pre_processer(char *infix_orig, char *result, int *result_length);
     bool infix2rpn(char *infix, char *result);
-    double eval_rpn(char *rpn);
+    bool eval_rpn(char *rpn);
+    double result;
 private:
     int order_between_operator(char operator_one, char operator_two);
     bool check_legal_operator(char* target, int num, int mode);

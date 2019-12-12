@@ -17,12 +17,20 @@ int main()
     if (rpn_processor.pre_processer(raw_data, infix_data, infix_length_pointer))
     {
         cout << "The preprocessor result is: " << infix_data << endl;
-        if(rpn_processor.infix2rpn(infix_data, rpn_data))
+        if (rpn_processor.infix2rpn(infix_data, rpn_data))
         {
             cout << "The rpn result is: " << rpn_data << endl;
-            cout << "The result is: " << rpn_processor.eval_rpn(rpn_data) << endl;
+            if (rpn_processor.eval_rpn(rpn_data))
+            {
+                cout << "The result is: " << rpn_processor.result << endl;
+            }
+            else
+            {
+                cout << "Failed to evaluate RPN. Something is wrong with your input or it's unsupported." << endl;
+            }
         }
     }
+    return 0;
 }
 
 void stack_test()

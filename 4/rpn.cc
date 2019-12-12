@@ -215,7 +215,7 @@ bool Rpn::infix2rpn(char *infix, char *result)
     return true;
 }
 
-double Rpn::eval_rpn(char *rpn)
+bool Rpn::eval_rpn(char *rpn)
 {
     int rpn_length = strlen(rpn);
     operand_stack.make_empty();
@@ -248,9 +248,10 @@ double Rpn::eval_rpn(char *rpn)
     if (operand_stack.size() != 1)
     {
         cerr << "Syntax error(s) occured in evaluating rpn." << endl;
-        return -7;
+        return false;
     }
-    return operand_stack.top();
+    result = operand_stack.top();
+    return true;
 }
 
 int Rpn::order_between_operator(char operator_one, char operator_two)
