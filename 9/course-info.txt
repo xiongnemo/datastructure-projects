@@ -1,0 +1,39 @@
+课程编号	 课程名称                学时数		  指定开课学期		   先修课程
+c01		    ProgramDesignBasic   	5			0
+c02			DiscreteMath		    6			0					c01
+c03			DataStructure	        4			0					c01 c02
+c04			AssemblyLanguage		5			0					c01
+c05			AlgorithmDesign	     	4			0					c03 c04
+c06			CSAPP               	6			0
+c07			MicrochipBasic	    	4			0					c03
+c08			MicrochipApplication    3			0					c03
+c09			CompilerBasic	        5			0					c03
+c10			OSBasic              	4			0					c03
+c11			DatabaseBasic	    	5			0					c03
+c12			HighMath		        6			0
+c13			LinearMath		        6			0
+c14			MathematicalAnalysis	6			0					c12
+c15			SimplePhysics	    	4			0					c12
+c16			ComputerCulture	    	3			0
+c17			ComputerSystem      	6			0					c06
+c18			ComputerNetwork	    	5			0					c03
+c19			DataCommunication		6			0
+c20			OOPDesign               3			0					c01 c03
+c21			Java			    	3			0					c01 c03
+c22			C#.net	        		5			0					c01 c03
+c23			PowerBuilder     		5			0					c01 c03
+c24			VC++	        		3			0					c01 c03
+c25			ASPDesign	        	5			0					c01 c03
+c26			JSPDesign	        	5			0					c01 c03
+c27			VB.net	         		5			0					c01 c03
+c28			Delphi	          		5			0					c01 c03
+c29			C++Builder        		5			0					c01 c03
+c30			English	          		5			1
+c31			English	        		5			2
+c32			English	         		5			3
+c33			English		        	5			4
+c34			English		        	5			5
+c35			English		        	5			6
+c36			English		        	5			7
+c37			English		        	5			8
+c38			CollegeChinese	    	3			1
