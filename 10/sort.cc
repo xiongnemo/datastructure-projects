@@ -19,6 +19,7 @@ void Sortdemo::show_menu()
 
 void Sortdemo::select()
 {
+    cout << endl;
     cout << "Input [1] or [B] or [b] for [B]ubble Sort;" << endl;
     cout << "Input [2] or [S] or [s] for [S]election Sort;" << endl;
     cout << "Input [3] or [I] or [i] for [I]nsertion Sort;" << endl;
@@ -165,7 +166,7 @@ void Sortdemo::initialize()
 
 uint64_t Sortdemo::bubble_sort(int *data, int size)
 {
-    int count = 0;
+    uint64_t count = 0;
     for (int i = 0; i < size; i++)
     {
         for (int j = 0; j < size - 1 - i; j++)
@@ -181,7 +182,7 @@ uint64_t Sortdemo::bubble_sort(int *data, int size)
 }
 uint64_t Sortdemo::selection_sort(int *data, int size)
 {
-    int count = 0;
+    uint64_t count = 0;
     int current_min = INT_MAX;
     int current_minimum_pos = 0;
     for (int i = 0; i < size - 1; i++)
@@ -207,7 +208,7 @@ uint64_t Sortdemo::selection_sort(int *data, int size)
 
 uint64_t Sortdemo::insertion_sort(int *data, int size)
 {
-    int count = 0;
+    uint64_t count = 0;
     for (int i = 1; i < size; i++)
     {
         for (int j = i; j > 0; j--)
