@@ -559,16 +559,8 @@ void Coursearrangementsystem::show_semester_timetable()
                 }
                 else
                 {
-                    int course_name_length = 4;
-                    int space_count = (COURSE_NAME_BUFFER_SIZE - course_name_length) / 2;
-                    int remaining_space_count = COURSE_NAME_BUFFER_SIZE - course_name_length - space_count;
                     cout << "|";
-                    for (int i = 0; i < space_count; i++)
-                    {
-                        cout << " ";
-                    }
-                    cout << "None";
-                    for (int i = 0; i < remaining_space_count; i++)
+                    for (int i = 0; i < COURSE_NAME_BUFFER_SIZE; i++)
                     {
                         cout << " ";
                     }
@@ -675,16 +667,8 @@ void Coursearrangementsystem::write_timatable_to_file()
                 }
                 else
                 {
-                    int course_name_length = 4;
-                    int space_count = (COURSE_NAME_BUFFER_SIZE - course_name_length) / 2;
-                    int remaining_space_count = COURSE_NAME_BUFFER_SIZE - course_name_length - space_count;
                     course_list_out_file << "|";
-                    for (int i = 0; i < space_count; i++)
-                    {
-                        course_list_out_file << " ";
-                    }
-                    course_list_out_file << "None";
-                    for (int i = 0; i < remaining_space_count; i++)
+                    for (int i = 0; i < COURSE_NAME_BUFFER_SIZE; i++)
                     {
                         course_list_out_file << " ";
                     }
