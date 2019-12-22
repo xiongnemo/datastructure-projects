@@ -6,6 +6,13 @@ Node *Managementsystem::initalize_system()
     cout << "Please set up the system first." << endl;
     cout << "Please input the No. of the examinees: ";
     cin >> examinee_quantity;
+    while (examinee_quantity<=0)
+    {
+        cerr << "The input for examinee_quantity is equal or small than 0." << endl;
+        cout << "Invaild input. Check your input and try again." << endl;
+        cout << "Please input the No. of the examinees: ";
+        cin >> examinee_quantity;
+    }
     total_num += examinee_quantity;
     cout << "Please enter the id, name, gender, age and test type of each examinee, one by one." << endl;
     Node *head = list.create_linked_list();
