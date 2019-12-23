@@ -1,5 +1,7 @@
 #include "linked_list.h"
 
+bool check_ordering(int *target, int size);
+
 int main(void)
 {
     int a[100];
@@ -41,19 +43,12 @@ int main(void)
         }
     }
 
-    /*
-    for (int i = 0; i < a_size; i++)
+    if ((!check_ordering(a, a_size)) || (!check_ordering(b, b_size)))
     {
-        printf("%d",a[i]);
+        cerr << "Input don't meet requirement: one or two of the list is not non-descending." << endl;
+        cout << "The program will now quit.\nCheck your input and try again." << endl;
+        return 0;
     }
-    printf("\n");
-    
-    for (int i = 0; i < b_size; i++)
-    {
-        printf("%d",b[i]);
-    }
-    printf("\n");
-    */
 
     list_one = create_linked_list(a, a_size);
     list_two = create_linked_list(b, b_size);
@@ -96,4 +91,16 @@ int main(void)
     free_list(list_one);
     free_list(list_two);
     free_list(list_intersection);
+}
+
+bool check_ordering(int *target, int size)
+{
+    for (int i = 1; i < size; i++)
+    {
+        if (target[i] < target[i - 1])
+        {
+            return false;
+        }
+    }
+    return true;
 }
