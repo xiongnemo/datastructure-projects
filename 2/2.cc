@@ -45,7 +45,7 @@ int main(void)
 
     if ((!check_ordering(a, a_size)) || (!check_ordering(b, b_size)))
     {
-        cerr << "Input don't meet requirement: one or two of the list is not non-descending." << endl;
+        cerr << "Input don't meet requirement: one or two of the lists is not non-descending." << endl;
         cout << "The program will now quit.\nCheck your input and try again." << endl;
         return 0;
     }
