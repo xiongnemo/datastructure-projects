@@ -6,7 +6,7 @@ Node *Managementsystem::initalize_system()
     cout << "Please set up the system first." << endl;
     cout << "Please input the No. of the examinees: ";
     cin >> examinee_quantity;
-    while (examinee_quantity<=0)
+    while (examinee_quantity <= 0)
     {
         cerr << "The input for examinee_quantity is equal or small than 0." << endl;
         cout << "Invaild input. Check your input and try again." << endl;
@@ -185,7 +185,7 @@ Node *Managementsystem::delete_examinee(Node *head)
     {
         if (current == head)
         {
-            Node* new_head = current->next;
+            Node *new_head = current->next;
             current = head;
             delete_current_item(current, new_head);
             return new_head;
