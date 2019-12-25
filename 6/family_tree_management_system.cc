@@ -105,7 +105,7 @@ void Familymanagementsystem::add_family_member(Familynode *head)
             cout << "Current target's descendant quantity excceeded. Try again." << endl;
             return;
         }
-        cout << "Please input his/her new descendant's name: ";
+        // cout << "Please input his/her new descendant's name: ";
         Familynode *temp = create_new_node();
         char name_buffer[NAME_BUFFER_SIZE];
         temp->prev = current;
@@ -174,7 +174,20 @@ void Familymanagementsystem::change_member_name(Familynode *head)
     {
         cout << "Input his/her new name." << endl;
         cout << "Your input: ";
-        cin >> current->name;
+        char name_buffer[NAME_BUFFER_SIZE];
+        cin >> name_buffer;
+        while (find_node_by_name(head, name_buffer))
+        {
+            cerr << "Duplicated records found for entry " << name_buffer << "." << endl;
+            cout << "Given name exists in record. Try input another name." << endl;
+            cout << "Now enter the new descendant's name:";
+            cin >> name_buffer;
+        }
+        int temp_length = strlen(name_buffer);
+        for (int j = 0; j <= temp_length; j++)
+        {
+            current->name[j] = name_buffer[j];
+        }
         cout << "Current target's name changed to " << current->name << "." << endl;
     }
 }
