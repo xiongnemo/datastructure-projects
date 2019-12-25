@@ -7,6 +7,10 @@ int main()
     return 0;
 }
 /*
+A
+4
+a b c d
+B
 a b 8
 b c 7
 c d 5
