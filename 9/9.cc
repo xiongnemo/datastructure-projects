@@ -10,7 +10,7 @@ int main()
         cout << "Can't initialize system." << endl;
         return -1;
     }
-    if (course_arran_system.construct_priority(FULL_OUTPUT))
+    if (course_arran_system.construct_priority())
     {
         if (course_arran_system.construct_semester_timetable())
         {

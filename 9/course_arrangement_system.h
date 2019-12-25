@@ -66,7 +66,8 @@ public:
         last_course_id_for_course_has_no_prerequisity = 0;
         for (int current_semester = 0; current_semester < 8; current_semester++)
         {
-
+            required_classes_quantity_for_each_semester[current_semester] = 0;
+            actual_classes_quantity_in_each_semester[current_semester] = 0;
             for (int class_index = 0; class_index < 4; class_index++)
             {
                 for (int weekday = 0; weekday < 5; weekday++)
@@ -80,7 +81,7 @@ public:
     void show_course_list(int output_mode);
     void show_semester_timetable();
     void write_timatable_to_file();
-    bool construct_priority(int output_mode);
+    bool construct_priority();
     bool construct_semester_timetable();
     
 
@@ -132,6 +133,8 @@ private:
         {1, 0, 2, 4, 3},
         {2, 1, 0, 3, 4}
     };
+    int required_classes_quantity_for_each_semester[8];
+    int actual_classes_quantity_in_each_semester[8];
 };
 
 #endif

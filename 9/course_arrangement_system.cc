@@ -7,16 +7,39 @@ bool Coursearrangementsystem::initialize()
         cout << "Can't open given file." << endl;
         return false;
     }
+
     if (!load_course_info_from_file())
+    {
         return false;
+    }
+
     if (!prerequisities_parser())
     {
         cout << "Can't parse prerequisities." << endl;
         cout << "Maybe you should check your input." << endl;
         return false;
     }
+
+    cout << "Please, input each semester's class quantity." << endl;
+    int accumulator = 0;
+    for (int i = 0; i < 8; i++)
+    {
+        cout << "Class quantity for semester #" << i + 1 << ": ";
+        int temp;
+        cin >> temp;
+        required_classes_quantity_for_each_semester[i] = temp;
+        accumulator += temp;
+    }
+    if (accumulator != course_quantity)
+    {
+        cerr << "Total quantity not equal to course_quantity: " << course_quantity << "." << endl;
+        cout << "Check your quantity's input and try again." << endl;
+        return false;
+    }
+
     return true;
 }
+
 void Coursearrangementsystem::show_course_list(int output_mode)
 {
     print_table_head();
@@ -61,6 +84,7 @@ void Coursearrangementsystem::print_table_head()
         << setw(COURSE_PREREQUISITIES_WIDTH) << "Course Prerequisites"
         << endl;
 }
+
 bool Coursearrangementsystem::open_course_list_input_file()
 {
 
@@ -91,6 +115,7 @@ bool Coursearrangementsystem::open_course_list_input_file()
     }
     return true;
 }
+
 bool Coursearrangementsystem::load_course_info_from_file()
 {
     string line_buffer;
@@ -116,16 +141,16 @@ bool Coursearrangementsystem::load_course_info_from_file()
         if (current_course->course_selected_semester != 0 && current_course->course_prerequisites_quantity != 0)
         {
             cerr << "Unsupported: input don't meet requirement of selected semester and course prerequisities." << endl;
-            return false;
-        }
-        /*
-        if (current_course->course_credit_hours != 2 || current_course->course_credit_hours != 3 || current_course->course_credit_hours != 4 || current_course->course_credit_hours != 5 || current_course->course_credit_hours != 6)
-        {
-            cerr << "Unsupported: input don't meet requirement of supported credit hours: 2, 3, 4, 5, 6." << endl;
             cerr << line_buffer << endl;
             return false;
         }
-        */
+        if (current_course->course_credit_hours != 2 && current_course->course_credit_hours != 3 && current_course->course_credit_hours != 4 && current_course->course_credit_hours != 5 && current_course->course_credit_hours != 6)
+        {
+            cerr << "Unsupported: input don't meet requirement of supported credit hours: 2, 3, 4, 5, 6." << endl;
+            cerr << "Course name: " << current_course->course_name << " with credit hours " << current_course->course_credit_hours << "." << endl;
+            cerr << line_buffer << endl;
+            return false;
+        }
         course_quantity++;
     }
     course_list_input_file.close();
@@ -136,6 +161,7 @@ bool Coursearrangementsystem::load_course_info_from_file()
     }
     return true;
 }
+
 bool Coursearrangementsystem::prerequisities_parser()
 {
     int cache_size = 0;
@@ -186,7 +212,7 @@ bool Coursearrangementsystem::prerequisities_parser()
     return true;
 }
 
-bool Coursearrangementsystem::construct_priority(int output_mode)
+bool Coursearrangementsystem::construct_priority()
 {
     int attended_course[MAX_COURSE_NUMBER] = {0};
     int course_quantity_needed_to_be_sort = 0;
@@ -245,10 +271,6 @@ bool Coursearrangementsystem::construct_priority(int output_mode)
         cout << "There is probably no solution, maybe your dependencies is circular. Check your input and try again." << endl;
         return false;
     }
-    if (output_mode)
-    {
-        priority.print();
-    }
     return true;
 }
 
@@ -269,10 +291,7 @@ bool Coursearrangementsystem::construct_semester_timetable()
             if (lite_list[i][1] == current_semester + 1)
             {
                 insert_course(i, current_semester);
-
-                // as "priority" doesn't contain those classes
-                // no need to add
-                // current_progress_in_queue++;
+                actual_classes_quantity_in_each_semester[current_semester]++;
             }
         }
 
@@ -283,18 +302,37 @@ bool Coursearrangementsystem::construct_semester_timetable()
         }
         while (check_table(to_be_inserted.top(), current_semester))
         {
-            if (to_be_inserted.top() == last_course_id_for_course_has_no_prerequisity)
+            if ((to_be_inserted.top() == last_course_id_for_course_has_no_prerequisity) || (actual_classes_quantity_in_each_semester[current_semester] == required_classes_quantity_for_each_semester[current_semester] - 1))
             {
                 // insert this
                 // and go on to next semester
                 insert_course(to_be_inserted.pop(), current_semester);
+                actual_classes_quantity_in_each_semester[current_semester]++;
                 break;
             }
             insert_course(to_be_inserted.pop(), current_semester);
+            actual_classes_quantity_in_each_semester[current_semester]++;
             if (to_be_inserted.size() == 0)
             {
                 break;
             }
+        }
+    }
+    for (int current_semester = 0; current_semester < 8; current_semester++)
+    {
+        if (actual_classes_quantity_in_each_semester[current_semester] != required_classes_quantity_for_each_semester[current_semester])
+        {
+            cerr
+                << "Required class quantity not match with actual: expected "
+                << required_classes_quantity_for_each_semester[current_semester]
+                << ", get "
+                << actual_classes_quantity_in_each_semester[current_semester]
+                << " in Semester #"
+                << current_semester + 1
+                << "."
+                << endl;
+            cout << "Check your input and try again." << endl;
+            return false;
         }
     }
     convert_to_output();
