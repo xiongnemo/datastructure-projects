@@ -35,6 +35,6 @@ private:
     bool check_legal_operator(char* target, int num, int mode);
     char priority[100] = {0}; 
     const char vaild_operators[10] = {'+', '-', '*', '/', '%', '^', '(', '!', ')', '='};
-};// namespace Rpn
+};
 
 #endif
