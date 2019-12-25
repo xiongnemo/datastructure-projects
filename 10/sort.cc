@@ -226,6 +226,7 @@ uint64_t Sortdemo::insertion_sort(int *data, int size)
     }
     return count;
 }
+
 uint64_t Sortdemo::shell_sort(int *data, int size)
 {
     int count = 0;
