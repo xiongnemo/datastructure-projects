@@ -7,6 +7,7 @@
 #include <cstring>
 #include <cstdint>
 #include <cmath>
+#include <limits.h>
 
 using std::cerr;
 using std::cin;

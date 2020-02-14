@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <cstring>
+#include <limits.h>
 
 #define MAX_VERTEX_COUNT 100
 #define NAME_BUFFER_SIZE 100
