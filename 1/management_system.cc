@@ -124,8 +124,8 @@ void Managementsystem::edit_current_item(Node *current)
     string temp_gender;
     cout << "\nCurrent item: " << endl;
     show_current_item(current);
-    cout << "\nPress 1 or N to edit [N]ame, 2 or G to edit [G]ender, 3 or A to edit [A]ge, 4 or T to edit [T]ype." << endl;
-    option = getch();
+    cout << "\nInput 1 or N to edit [N]ame, 2 or G to edit [G]ender, 3 or A to edit [A]ge, 4 or T to edit [T]ype." << endl;
+    option = getchar();
     switch (option)
     {
     case '1':

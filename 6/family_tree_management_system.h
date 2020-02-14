@@ -6,7 +6,6 @@
 #include <cstring>
 #include <iostream>
 #include <iomanip>
-#include <conio.h>
 
 #define NAME_BUFFER_SIZE 20
 #define MOST_DESCEN_quantity 10

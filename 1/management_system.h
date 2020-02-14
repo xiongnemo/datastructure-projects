@@ -2,7 +2,6 @@
 #define MANAG_SYS_H
 
 #include "linked_list.h"
-#include <conio.h>
 
 class Managementsystem
 {
