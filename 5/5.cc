@@ -1,6 +1,4 @@
-#include <iostream>
-#include <cstdio>
-#include <cmath>
+#include "5.h"
 
 int main()
 {
